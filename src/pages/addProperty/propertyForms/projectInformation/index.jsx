@@ -1,4 +1,4 @@
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { PhotoIcon } from "@heroicons/react/24/solid";
 import AreaInputWithDropdown from "../../../../../src/components/common/AreaInputWithDropdown";
 import CustomInput from "../../../../../src/components/common/CustomInput";
 import CustomDropdown from "../../../../../src/components/common/CustomDropdown";
@@ -6,6 +6,7 @@ import CustomDropdown from "../../../../../src/components/common/CustomDropdown"
 export default function ProjectInformation(props) {
   const { updateInputValue, getValue } = props;
   const type = "projectInformation";
+  const propertyImage = getValue(type, "propertyImage")
   return (
     <>
       <div className="space-y-12">
@@ -198,12 +199,19 @@ export default function ProjectInformation(props) {
                       htmlFor="file-upload"
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                     >
-                      <span>Upload a file</span>
+                      <span onClick={() => document.getElementById('upload-file-input').click()} 
+                      className="file-upload-btn">Upload a file</span>
                       <input
-                        id="file-upload"
-                        name="propertyImage"
-                        type="file"
+                         id="upload-file-input"
+                         name="propertyImage"
+                         type="file"
+                    
                         className="sr-only"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          const url = URL.createObjectURL(file);
+                          updateInputValue(url, e, type);
+                        }}
                       />
                     </label>
                     <p className="pl-1">or drag and drop</p>
@@ -214,6 +222,14 @@ export default function ProjectInformation(props) {
                 </div>
               </div>
             </div>
+            {propertyImage  
+            ?
+              <div className="col-span-full justify-self-center">
+                <img src={propertyImage} alt='UploadedImage' className="w-40 h-40 "/> 
+              </div>
+              : 
+              " "
+            }
 
             <div className="sm:col-span-6">
               <CustomInput

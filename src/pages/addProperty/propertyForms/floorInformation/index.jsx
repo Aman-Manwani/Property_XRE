@@ -5,6 +5,8 @@ import CustomInput from "../../../../../src/components/common/CustomInput";
 const FloorInformationForm = (props) => {
   const { updateInputValue, getValue } = props;
   const type = "floorInformation";
+  const FloorImage = getValue(type, "FloorImage")
+
   return (
     <div className="space-y-12">
       <div className="border-b border-gray-900/10 pb-12">
@@ -54,39 +56,54 @@ const FloorInformationForm = (props) => {
             getValue={() => getValue(type, "floorArea")}
           />
           <div className="col-span-full">
-            <label
-              htmlFor="cover-photo"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Floor Plan
-            </label>
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-              <div className="text-center">
-                <PhotoIcon
-                  className="mx-auto h-12 w-12 text-gray-300"
-                  aria-hidden="true"
-                />
-                <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                  <label
-                    htmlFor="file-upload"
-                    className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                  >
-                    <span>Upload a file</span>
-                    <input
-                      id="file-upload"
-                      name="file-upload"
-                      type="file"
-                      className="sr-only"
-                    />
-                  </label>
-                  <p className="pl-1">or drag and drop</p>
+              <label
+                htmlFor="cover-photo"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Upload photo
+              </label>
+              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                <div className="text-center">
+                  <PhotoIcon
+                    className="mx-auto h-12 w-12 text-gray-300"
+                    aria-hidden="true"
+                  />
+                  <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                    <label
+                      htmlFor="file-upload"
+                      className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                    >
+                      <span onClick={() => document.getElementById('upload-file-input').click()} 
+                      className="file-upload-btn">Upload a file</span>
+                      <input
+                         id="upload-file-input"
+                         name="FloorImage"
+                         type="file"
+                    
+                        className="sr-only"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          const url = URL.createObjectURL(file);
+                          updateInputValue(url, e, type);
+                        }}
+                      />
+                    </label>
+                    <p className="pl-1">or drag and drop</p>
+                  </div>
+                  <p className="text-xs leading-5 text-gray-600">
+                    PNG, JPG, GIF up to 10MB
+                  </p>
                 </div>
-                <p className="text-xs leading-5 text-gray-600">
-                  PNG, JPG, GIF up to 10MB
-                </p>
               </div>
             </div>
-          </div>
+            {FloorImage  
+            ?
+              <div className="col-span-full justify-self-center">
+                <img src={FloorImage} alt='UploadedImage' className="w-40 h-40 "/> 
+              </div>
+              : 
+              " "
+            }
         </div>
       </div>
     </div>

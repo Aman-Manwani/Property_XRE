@@ -8,7 +8,7 @@ const PropertyInfoDisplay = () => {
     <div className='p-6 mb-4 flex justify-between items-center md:shadow-xl rounded-md'>
       <div className='flex gap-4'>
         <div>
-            <img className='w-[120px] h-[80px]' alt='property'></img>
+            <img src={newPropertyInfo.projectInformation.propertyImage} className='w-[100px] h-[80px]' alt='property'></img>
         </div>
         <div className='flex flex-col gap-2'>
             <div>

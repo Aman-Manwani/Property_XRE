@@ -126,9 +126,9 @@ export default function PropertyHeader() {
               </div>
             </div>
           </div>
-          <div>
+          {/* <div>
             <FiltersBar />
-          </div>
+          </div> */}
         </>
       )}
     </Disclosure>
