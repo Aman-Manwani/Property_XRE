@@ -78,7 +78,7 @@ export default function PropertyListing({filteredProperty}) {
   if(filteredProperty){
     property = filteredProperty
   }
-  
+  console.log(property);
   return (
     <div className="px-4 sm:px-6 lg:px-8 lg:mb-6">
       <div className="mt-2 flow-root">
@@ -148,7 +148,7 @@ export default function PropertyListing({filteredProperty}) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {property?.map((property) => (
+                  { property.length ? property.map((property) => (
                     <tr key={property.id}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-500 sm:pl-6">
                         {property.id}
@@ -198,7 +198,11 @@ export default function PropertyListing({filteredProperty}) {
                         </a>
                       </td>
                     </tr>
-                  ))}
+                  )) :
+                   <div className="py-3  flex justify-center">
+                      <h1 className="text-3xl font-bold" >No Match Found</h1>
+                   </div> 
+                  }
                 </tbody>
               </table>
             </div>
