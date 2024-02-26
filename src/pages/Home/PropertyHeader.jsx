@@ -7,7 +7,77 @@ import {
   MagnifyingGlassIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AppliedFiltersBar from "./AppliedFiltersBar";
+import PropertyListing from "./PropertiesListing";
+import PropertiesPagination from "./PropertiesPagination";
+
+const propertydummy =[
+  {
+    id: "#00001",
+    type: "Commercial",
+    name: "Metropolicis Mall",
+    location: "MG Road, GuruGram",
+    area: "1200 (Sq. Ft.)",
+    occupied: "685 (Sq. Ft.)",
+    status: "Approved",
+  },
+  {
+    id: "#00002",
+    type: "IT",
+    name: "DLF Building",
+    location: "Millenium City , Gurugram",
+    area: "2568(Sq. Ft.)",
+    occupied: "1985 (Sq. Ft.)",
+    status: "Approved",
+  },
+  {
+    id: "#00003",
+    type: "Commercial",
+    name: "Ambani's Building",
+    location: "BeachSide , Mumbai",
+    area: "1456 (Sq. Ft.)",
+    occupied: "985 (Sq. Ft.)",
+    status: "Approved",
+  },
+  {
+    id: "#00004",
+    type: "Commercial",
+    name: "Swastik Universal Building",
+    location: "Magdalla Road, Surat",
+    area: "2456 (Sq. Ft.)",
+    occupied: "1985 (Sq. Ft.)",
+    status: "Drafts",
+  },
+  {
+    id: "#00005",
+    type: "IT",
+    name: "Paras Quartier",
+    location: "Bandhwari, Gurugram",
+    area: "1087 (Sq. Ft.)",
+    occupied: "185 (Sq. Ft.)",
+    status: "Rejected",
+  },
+  {
+    id: "#00006",
+    type: "Commercial",
+    name: "Raheja Raventa",
+    location: "Sector-78 , Gurugram",
+    area: "4728 (Sq. Ft.)",
+    occupied: "2985 (Sq. Ft.)",
+    status: "Approved",
+  },
+  {
+    id: "#00007",
+    type: "Commercial",
+    name: "DLF Camellias",
+    location: "Sector 42 , Gurugram",
+    area: "5642 (Sq. Ft.)",
+    occupied: "1859 (Sq. Ft.)",
+    status: "Approved",
+  },
+];
 
 const FiltersBar = () => {
   return (
@@ -47,7 +117,7 @@ const FiltersBar = () => {
   );
 };
 
-const SearchInput = (props) => {
+const SearchInput = ({setSearchInput}) => {
   return (
     <div className="w-full sm:max-w-md">
       <div className="relative rounded-md shadow-sm">
@@ -72,6 +142,7 @@ const SearchInput = (props) => {
             id="phone-number"
             className="block w-full rounded-md border-0 py-1.5 pl-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             placeholder="Search location"
+            onChange={(e) => setSearchInput(e.target.value)}
           />
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
             <MagnifyingGlassIcon
@@ -85,10 +156,15 @@ const SearchInput = (props) => {
   );
 };
 
-export default function PropertyHeader() {
+export default function PropertyHome() {
   const navigate = useNavigate();
-
+  const[searchInput , setSearchInput] = useState('')
+  const PropertyList = JSON.parse(localStorage.getItem('propertyList')) || propertydummy;
+  const filteredProperty = PropertyList.filter(item =>
+    item.name.toLowerCase().includes(searchInput.toLowerCase())
+  );
   return (
+    <>
     <Disclosure as="header" className="border-b">
       {({ open }) => (
         <>
@@ -102,7 +178,7 @@ export default function PropertyHeader() {
                 </div>
               </div>
               <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
-                <SearchInput />
+                <SearchInput setSearchInput = {setSearchInput} />
               </div>
               <div className="relative z-10 flex items-center lg:hidden">
                 {/* Mobile menu button */}
@@ -126,11 +202,15 @@ export default function PropertyHeader() {
               </div>
             </div>
           </div>
-          {/* <div>
+          <div>
             <FiltersBar />
-          </div> */}
+          </div>
         </>
       )}
     </Disclosure>
+      <AppliedFiltersBar />
+      <PropertyListing filteredProperty = {filteredProperty}/>
+      <PropertiesPagination />
+    </>
   );
 }

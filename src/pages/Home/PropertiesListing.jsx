@@ -1,12 +1,6 @@
 import { ArrowUpIcon } from "@heroicons/react/20/solid"
 import { useEffect } from "react";
 
-
-
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 const propertydummy =[
   {
     id: "#00001",
@@ -73,9 +67,17 @@ const propertydummy =[
   },
 ];
 
-export default function PropertyListing() {
 
-const property = JSON.parse(localStorage.getItem('propertiesList')) || propertydummy;
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
+
+export default function PropertyListing({filteredProperty}) {
+
+  let property = JSON.parse(localStorage.getItem('propertiesList')) || propertydummy;
+  if(filteredProperty){
+    property = filteredProperty
+  }
   
   return (
     <div className="px-4 sm:px-6 lg:px-8 lg:mb-6">

@@ -167,7 +167,6 @@ const AddPropertyPage = () => {
       case 2:
         return(
           <>
-            <PropertyInfoDisplay />
             <FloorInformationForm getValue={getValue} updateInputValue={updateInputValue} />
           </>
         )
@@ -175,7 +174,6 @@ const AddPropertyPage = () => {
       case 3:
         return(
           <>
-            <PropertyInfoDisplay />
             <UnitInformationForm getValue={getValue} updateInputValue={updateInputValue} />
           </> 
         )
@@ -183,7 +181,6 @@ const AddPropertyPage = () => {
       case 4:
         return (
           <>
-            <PropertyInfoDisplay />
             <OwnerInformation getValue={getValue} updateInputValue={updateInputValue} />
           </>
         )
@@ -251,8 +248,35 @@ const AddPropertyPage = () => {
     setPopup(true)
   }
 
-  // console.log(formData, "XRE")
-
+  
+  const showProjectInfoOnTop = () => {
+switch (AddPropertyStepConstant[currentFormIndex].id) {
+case 2:
+  return(
+    <>
+      <PropertyInfoDisplay />
+    </>
+  )
+  break;
+case 3:
+  return(
+    <>
+      <PropertyInfoDisplay />
+    </> 
+  )
+  break;
+case 4:
+  return (
+    <>
+      <PropertyInfoDisplay />
+    </>
+  )
+  break;
+  default:
+    <PropertyInfoDisplay />
+  break;
+}
+}
   return (
     <>
       <div className='flex justify-center gap-8 mt-4'>
@@ -260,7 +284,10 @@ const AddPropertyPage = () => {
           <AddPropertySteps currentFormIndex={currentFormIndex} />
         </div>
 
-        <div className="border-b border-gray-200 bg-[white] px-4 py-5 sm:px-6 w-[50%] shadow-md rounded-md ">
+        <div className='w-[50%]'>
+
+        {showProjectInfoOnTop()}
+        <div className="border-b border-gray-200 bg-[white] px-4 py-5 sm:px-6 shadow-md rounded-md ">
           <form>
             {showFormBasedOnId()}
             <div className="mt-6 flex items-center justify-between gap-x-6">
@@ -291,6 +318,7 @@ const AddPropertyPage = () => {
             </div>
           </form>
 
+        </div>
         </div>
       </div>
     </>
